@@ -66,30 +66,15 @@ The selected towns and road links are represented as a graph. Each town is a nod
 
 ### 4.1 Directed Graph
 
+<img width="600" height="701" alt="Graph1 drawio" src="https://github.com/user-attachments/assets/61a9d12b-5b7e-416a-80de-524e0a21248e" />
 
 
 ### 4.2 Search Tree
 
 The search tree starts at Nairobi and expands every route towards Kisumu. Each edge is labelled with its distance in km, and each leaf shows the total path cost of that route.
 
-```mermaid
-graph TD
-    N["Nairobi"] -->|88| NV["Naivasha"]
-    N -->|142| NR["Narok"]
-    NV -->|71| NK["Nakuru"]
-    NK -->|47| MO["Molo"]
-    NK -->|156| EL["Eldoret"]
-    MO -->|60| KE1["Kericho"]
-    KE1 -->|83| KS1["Kisumu: 349 km"]
-    EL -->|48| KP["Kapsabet"]
-    KP -->|74| KE2["Kericho"]
-    KE2 -->|83| KS2["Kisumu: 520 km"]
-    NR -->|86| BO["Bomet"]
-    BO -->|68| KI["Kisii"]
-    KI -->|83| KS3["Kisumu: 379 km"]
-```
+<img width="456" height="782" alt="Graph2 drawio" src="https://github.com/user-attachments/assets/6c24eee0-3fac-4e36-aa9f-488bfa84eab9" />
 
----
 
 ## 5. Alternative Routes Comparison and Optimal Path Determination
 
@@ -121,3 +106,4 @@ Based on the path cost function, the optimal route for the searching agent is Ro
 
 ## 6. Evidence of Groupwork
 
+<img width="1600" height="900" alt="WhatsApp Image 2026-10-16 at 13 57 48" src="https://github.com/user-attachments/assets/ad871fe9-9bb3-49a5-b896-87a03da2de84" />
