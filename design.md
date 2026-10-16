@@ -73,7 +73,7 @@ The selected towns and road links are represented as a graph. Each town is a nod
 
 The search tree starts at Nairobi and expands every route towards Kisumu. Each edge is labelled with its distance in km, and each leaf shows the total path cost of that route.
 
-<img width="456" height="782" alt="Graph2 drawio" src="https://github.com/user-attachments/assets/6c24eee0-3fac-4e36-aa9f-488bfa84eab9" />
+<img width="456" height="782" alt="Graph2 drawio" src="https://github.com/user-attachments/assets/f4de2f38-fd92-4977-8002-042bcc2d15d8" />
 
 
 ## 5. Alternative Routes Comparison and Optimal Path Determination
