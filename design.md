@@ -1,84 +1,83 @@
-# ICS 3202: Artificial Intelligence — Practical Exercise 3
+# ICS 3202: Artificial Intelligence, Practical Exercise 3
 
-## Designing a Searching Agent
+## Designing a searching agent
 
-**Group members:**
+Group members:
 
 - Abdullahi Osman - 152386
 - Adan Siba - 191224
 - Daniel Ndumbe - 190374
 
-**Agent:** Self-driving trailer
-**Environment:** Kenya's highway network
-**Initial state:** Nairobi
-**Goal state:** Kisumu
+Agent: Self-driving trailer
+Environment: Kenya's highway network
+Initial state: Nairobi
+Goal state: Kisumu
 
 ---
 
 ## 1. Introduction
 
-This exercise considers a self-driving trailer travelling from Nairobi to Kisumu. The PEAS framework is used to describe the agent and its environment. The road network is then represented as a graph, and a search method is used to identify the shortest route in the selected network.
+This exercise looks at a self-driving trailer travelling from Nairobi to Kisumu. We describe the agent and its environment with the PEAS framework, model the road network as a graph, and search that graph for the shortest route.
 
 ---
 
-## 2. Question 1: PEAS Framework
+## 2. Question 1: PEAS framework
 
 | PEAS element | Description |
 |---|---|
-| **Performance measure** | Reach Kisumu safely, avoid collisions and cargo damage, obey traffic rules, and reduce distance, fuel use, and delivery time. |
-| **Environment** | Kenyan roads, other vehicles, pedestrians, road signs, junctions, weather, traffic, and roadworks. |
-| **Actuators** | Steering, accelerator, brakes, gears, indicators, lights, horn, and wipers. |
-| **Sensors** | Cameras, radar, GPS, speedometer, LiDAR, motion sensors, and digital maps. |
+| Performance measure | Reach Kisumu safely, avoid collisions and cargo damage, obey traffic rules, and keep distance, fuel use, and delivery time low. |
+| Environment | Kenyan roads, other vehicles, pedestrians, road signs, junctions, weather, traffic, and roadworks. |
+| Actuators | Steering, accelerator, brakes, gears, indicators, lights, horn, and wipers. |
+| Sensors | Cameras, radar, GPS, speedometer, LiDAR, motion sensors, and digital maps. |
 
-### 2.1 Agent Environment Classification
+### 2.1 Environment classification
 
-- **Fully observable vs partially observable:** The environment is **partially observable**, because the trailer's sensors cannot provide complete information about every aspect of the road environment at all times.
-- **Deterministic vs stochastic:** The environment is **stochastic**, because the outcome of an action may be affected by factors beyond the agent's control, such as other drivers, accidents, and unexpected road conditions.
-- **Episodic vs sequential:** The environment is **sequential**, because the agent's current decisions affect subsequent states and available actions.
-- **Static vs dynamic:** The environment is **dynamic**, because traffic, road, and weather conditions may change while the agent is deciding which action to take.
-- **Single-agent vs multi-agent:** The environment is **multi-agent**, because other road users such as drivers and pedestrians also act within the same environment and influence the trailer's decisions.
-
----
-
-## 3. Question 2: Road Network and Graph
-
-The selected towns and road links are represented as a graph. Each town is a node, and each road is an edge labelled with its distance in kilometres. Roads are two-way in reality, so each road represents two directed edges with the same cost. In the diagram below, only the edge in the direction of travel from Nairobi towards Kisumu is drawn, because the return edges never lead towards the goal.
-
-### 3.1 Problem Formulation and Search
-
-- **Initial state:** Nairobi
-- **Goal state:** Kisumu
-- **State space:** The towns in the road network
-- **Available actions:** Road connections that allow the trailer to travel from its current town to another town
-- **Goal test:** Checks whether the current state is Kisumu
-- **Path cost function:** Total road distance travelled from Nairobi to the current town
-- **Transition model:** Moving along a selected road leads to the connected town
-- **Optimal solution:** A valid route from Nairobi to Kisumu with minimum total road distance
-
-### 3.2 Abstraction of the Road Network
-
-- The real-world road network is simplified by representing towns as states and direct road connections as edges.
-- Details that do not affect the choice of route, such as road curvature, lanes, traffic, and weather, are left out of the model. Only the towns and the distances between them are kept.
+- Fully vs partially observable: partially observable. The sensors cannot show the trailer everything on the road at all times, for example a vehicle around a bend or a pothole under standing water.
+- Deterministic vs stochastic: stochastic. Other drivers, accidents, and sudden road conditions can change what an action leads to, and the trailer cannot control them.
+- Episodic vs sequential: sequential. Each decision changes the trailer's later states and the actions open to it.
+- Static vs dynamic: dynamic. Traffic, road conditions, and weather can change while the agent is still deciding what to do.
+- Single-agent vs multi-agent: multi-agent. Drivers and pedestrians act in the same environment and affect the trailer's decisions.
 
 ---
 
-## 4. Directed Graph and Search Tree Representation
+## 3. Question 2: Road network and graph
 
-### 4.1 Directed Graph
+We represent the selected towns and roads as a graph. Each town is a node, and each road is an edge labelled with its distance in kilometres. Real roads are two-way, so each road stands for two directed edges with the same cost. The diagram below draws only the direction from Nairobi towards Kisumu, since the return edges never lead towards the goal.
+
+### 3.1 Problem formulation and search
+
+- Initial state: Nairobi
+- Goal state: Kisumu
+- State space: the towns in the road network
+- Actions: driving along a road from the current town to a connected town
+- Goal test: is the current town Kisumu?
+- Path cost function: total road distance from Nairobi to the current town
+- Transition model: driving along a chosen road takes the trailer to the town at its other end
+- Optimal solution: the route from Nairobi to Kisumu with the smallest total distance
+
+### 3.2 Abstraction of the road network
+
+We simplify the road network by treating towns as states and direct roads as edges. Road curvature, lanes, traffic, and weather do not change which route is shortest, so the model leaves them out and keeps only the towns and the distances between them.
+
+---
+
+## 4. Directed graph and search tree
+
+### 4.1 Directed graph
 
 <img width="600" height="701" alt="Graph1 drawio" src="https://github.com/user-attachments/assets/61a9d12b-5b7e-416a-80de-524e0a21248e" />
 
 
-### 4.2 Search Tree
+### 4.2 Search tree
 
-The search tree starts at Nairobi and expands every route towards Kisumu. Each edge is labelled with its distance in km, and each leaf shows the total path cost of that route.
+The search tree starts at Nairobi and expands every route towards Kisumu. Each edge shows its distance in km, and each leaf shows the total path cost of that route.
 
 <img width="456" height="782" alt="Graph2 drawio" src="https://github.com/user-attachments/assets/f4de2f38-fd92-4977-8002-042bcc2d15d8" />
 
 
-## 5. Alternative Routes Comparison and Optimal Path Determination
+## 5. Comparing routes and finding the optimal path
 
-### 5.1 Route Comparison Table
+### 5.1 Route comparison
 
 | Route | Path | Calculation | Total distance (km) |
 |---|---|---|---|
@@ -86,7 +85,7 @@ The search tree starts at Nairobi and expands every route towards Kisumu. Each e
 | 2 | Nairobi → Narok → Bomet → Kisii → Kisumu | 142 + 86 + 68 + 83 | 379 |
 | 3 | Nairobi → Naivasha → Nakuru → Eldoret → Kapsabet → Kericho → Kisumu | 88 + 71 + 156 + 48 + 74 + 83 | 520 |
 
-### 5.2 Distance Calculation for Optimal Path
+### 5.2 Distance for the optimal path
 
 | Segment | Distance (km) |
 |---|---|
@@ -96,14 +95,14 @@ The search tree starts at Nairobi and expands every route towards Kisumu. Each e
 | d(Molo, Kericho) | 60 |
 | d(Kericho, Kisumu) | 83 |
 
-Path cost = 88 + 71 + 47 + 60 + 83 = **349 km**
+Path cost = 88 + 71 + 47 + 60 + 83 = 349 km
 
-### 5.3 Optimal Path
+### 5.3 Optimal path
 
-Based on the path cost function, the optimal route for the searching agent is Route 1 (Nairobi → Naivasha → Nakuru → Molo → Kericho → Kisumu), with a total distance of **349 km**. It has the lowest path cost of the three routes compared.
+Route 1 (Nairobi → Naivasha → Nakuru → Molo → Kericho → Kisumu) is the optimal route. At 349 km it has the lowest path cost of the three routes, 30 km shorter than Route 2 and 171 km shorter than Route 3.
 
 ---
 
-## 6. Evidence of Groupwork
+## 6. Evidence of groupwork
 
 <img width="1600" height="900" alt="WhatsApp Image 2026-10-16 at 13 57 48" src="https://github.com/user-attachments/assets/ad871fe9-9bb3-49a5-b896-87a03da2de84" />
