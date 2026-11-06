@@ -70,9 +70,24 @@ We simplify the road network by treating towns as states and direct roads as edg
 
 ### 4.2 Search tree
 
-The search tree starts at Nairobi and expands every route towards Kisumu. Each edge shows its distance in km, and each leaf shows the total path cost of that route.
+The search tree starts at Nairobi and expands every route towards Kisumu. Each edge shows its distance in km, and each node shows the total path cost from Nairobi to that town. The tree has three leaves at Kisumu, one for each route in Section 5.1.
 
-<img width="456" height="782" alt="Graph2 drawio" src="https://github.com/user-attachments/assets/f4de2f38-fd92-4977-8002-042bcc2d15d8" />
+```
+Nairobi (0)
+├── Naivasha (88)
+│   └── Nakuru (159)
+│       ├── Eldoret (315)
+│       │   └── Kapsabet (363)
+│       │       └── Kericho (437)
+│       │           └── Kisumu (520)      Route 3
+│       └── Molo (206)
+│           └── Kericho (266)
+│               └── Kisumu (349)          Route 1
+└── Narok (142)
+    └── Bomet (228)
+        └── Kisii (296)
+            └── Kisumu (379)              Route 2
+```
 
 
 ## 5. Comparing routes and finding the optimal path
